@@ -1,0 +1,23 @@
+{
+	"Email": "",
+	"Reg": {
+		"body": {
+			"resource": "reg",
+			"id": 5648731,
+			"key": {
+				"kty": "EC",
+				"crv": "P-384",
+				"x": "IFQ1LdVKO9EHvd8jitlCQIQHpdQfLVS8oxTNGFcUteSbNr9EqNRuXmHhEBwoF5HZ",
+				"y": "pvdvRX0W6it3fw0s2dPwDGuUHEA64CB5-yhfxkqzJkJtqNz29J2i1GckOVfPvVG5"
+			},
+			"contact": [],
+			"agreement": "https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf"
+		},
+		"uri": "https://acme-v01.api.letsencrypt.org/acme/reg/5648731",
+		"new_authzr_uri": "https://acme-v01.api.letsencrypt.org/acme/new-authz",
+		"terms_of_service": "https://letsencrypt.org/documents/LE-SA-v1.1.1-August-1-2016.pdf"
+	},
+	"Key": "-----BEGIN EC PRIVATE KEY-----\nMIGkAgEBBDAXpoVjjYWWYa4jLEl/7/JNyBXElWfIiyYc6/AKbnwcDUYJh9axxgUt\nQoM0znY+kEKgBwYFK4EEACKhZANiAAQgVDUt1Uo70Qe93yOK2UJAhAel1B8tVLyj\nFM0YVxS15Js2v0So1G5eYeEQHCgXkdmm929FfRbqK3d/DSzZ0/AMa5QcQDrgIHn7\nKF/GSrMmQm2o3Pb0naLUZyQ5V8+9Ubk=\n-----END EC PRIVATE KEY-----\n",
+	"Hosts": null,
+	"Certs": null
+}

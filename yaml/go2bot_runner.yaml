@@ -1,0 +1,8 @@
+maxbots: 2
+interval: 5
+bots: [
+  "﻿C:\\Users\\paul\\Desktop\\AdvGo2Bot-Deathlancer",
+  "﻿C:\\Users\\paul\\Desktop\\AdvGo2Bot-Mega",
+  "﻿C:\\Users\\paul\\Desktop\\AdvGo2Bot-Kein",
+  "﻿C:\\Users\\paul\\Desktop\\AdvGo2Bot-RooBoy"
+]

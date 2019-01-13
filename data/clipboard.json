@@ -1,0 +1,30 @@
+{
+  "go2": {
+    "MegaByte": {
+      "Email": "game1@cp-soft.com",
+      "Pass": "DozZY+aSzeBCBinVT62HK7clkEcPdQR4AkSnHQ=="
+    },
+    "Rooboy": {
+      "Email": "game3@cp-soft.com",
+      "Pass": "p9rnORrRHkBk/2L2+ea3dXM3/0SPi0s60gEWZA=="
+    },
+    "Shattered": {
+      "Email": "game4@cp-soft.com",
+      "Pass": "nE0Z4xivM6r+63eaunjXCB1u9sK+P+tEtuvyUw=="
+    },
+    "Stuffn": {
+      "Email": "game2@cp-soft.com",
+      "Pass": "1iwVvEFd7iP+n4CRowYaLlN4wkAUSvE9KweYGQ=="
+    }
+  },
+  "tdbank": {
+    "carol": {
+      "Email": "cafortin@cp-soft.com",
+      "Pass": "h1ig1Qt1FozbtDu4wP7aPvnxFDkcqbWWnBfdXHvQ/4U="
+    },
+    "paul": {
+      "Email": "paul@cp-soft.com",
+      "Pass": "KnlAL8BeNClGeUXXZMdOdYhalSUN6GVhbWCC+g=="
+    }
+  }
+}

@@ -1,0 +1,47 @@
+# Common
+app_name: LocalOrderFulfiller
+port: 7070
+github_branch: Github-Branch
+jenkins_build_number: Jenkins-BuildNumber
+github_hash: Github-Hash
+build_number: 12
+environment: LOCAL
+new_relic_license: abc123
+
+# Mongo
+mongo_host: localhost:27017
+mongo_read_concern: 2
+
+# AWS
+go_aws_endpoint: http://localhost:4100/
+aws_access_key_id: X
+aws_secret_access_key: X
+max_polling_period: 10000
+
+# Tibco - OrderSubmitURL
+order_submit_url: https://stage.tibco.urbanout.com/listener/v1/ordersubmit
+order_submit_timeout: 20
+
+# Order Number Generator
+order_number_generator_url: http://local-ong:7070/order-nummber
+order_number_generator_timeout: 2
+
+collectors:
+  - name: aws_collector_1
+    type: aws
+    aws_region: us-east-1
+    max_collectors: 5
+    order_fulfillment_queue_url: https://sqs.us-east-1.amazonaws.com/478989820108/A15-DEV-ORDER-FULFILLMENT
+    order_fulfillment_error_queue_url: https://sqs.us-east-1.amazonaws.com/478989820108/A15-DEV-ORDER-FULFILLMENT-ERRORS
+  - name: aws_collector_2
+    type: aws
+    aws_region: us-west-1
+    max_collectors: 2
+    order_fulfillment_queue_url: http:/test2
+    order_fulfillment_error_queue_url: http:/err_test2
+
+
+# Workers
+max_workers: 5
+max_retries: 5
+requeue_delay_time: 300

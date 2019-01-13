@@ -1,0 +1,39 @@
+<html>
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+<div id="maindiv" class="container">
+<h3>Real-Time Crypto Currency Quotes</h3>
+
+</div>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+    coins = []
+
+    url = 'ws://localhost:12312/ws';
+    c = new WebSocket(url);
+
+    send = function(data){
+        $("#output").append((new Date())+ " ==> "+data+"\n")
+        c.send(data)
+    }
+
+    c.onmessage = function(msg){
+        var parent = document.getElementById("maindiv")
+        var coindata = JSON.parse(msg.data)
+        var coindiv = document.getElementById(coindata['coin'])
+        if(coindiv == null) {
+            var myDiv = document.createElement('div');
+            myDiv.id = coindata['coin'];
+            parent.appendChild(myDiv);
+            myDiv.innerHTML = coindata['coin'] + " -- " + coindata['price']
+        } else {
+            coindiv.innerHTML = coindata['coin'] + " -- " + coindata['price']
+        }
+    }
+</script>
+
+</body>
+</html>

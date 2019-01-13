@@ -1,0 +1,59 @@
+package main
+
+import (
+	"crypto/x509"
+	"fmt"
+	"io/ioutil"
+	"os"
+
+	"crypto/tls"
+	"log"
+	"net"
+
+	"gopkg.in/mgo.v2"
+)
+
+func main() {
+	roots := x509.NewCertPool()
+	if ca, err := ioutil.ReadFile("./sonutest.urbn.com.pem"); err == nil {
+		fmt.Println(string(ca))
+		roots.AppendCertsFromPEM(ca)
+	} else {
+		panic(err)
+	}
+
+	tlsConfig := &tls.Config{}
+	tlsConfig.RootCAs = roots
+
+	dialInfo := &mgo.DialInfo{
+		Addrs: []string{"d1shmondb01.dev.ecomm.urbanout.com:27017"},
+	}
+
+	dialInfo.DialServer = func(addr *mgo.ServerAddr) (net.Conn, error) {
+		conn, err := tls.Dial("tcp", addr.String(), tlsConfig)
+		if err != nil {
+			log.Println(err)
+		}
+		return conn, err
+	}
+	session, err := mgo.DialWithInfo(dialInfo)
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(0)
+	}
+	defer session.Close()
+
+	fmt.Println("Connected to mongo -try a query now!!!")
+	//session.SetMode(mgo.Monotonic, true)
+	//c := session.DB("CheckoutService").C("orders")
+	//
+	//// Query One
+	//var results []interface{}
+	//err = c.Find(bson.M{}).All(&results)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//for _, result := range results {
+	//	fmt.Println("Result ->", result)
+	//}
+}

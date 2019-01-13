@@ -1,0 +1,5 @@
+name: [ "APP_NAME", "CatalogService" ]
+listen_port: [ "LISTEN_PORT", "7030" ]
+default_language: ["CATALOG_SERVICE_DEFAULT_LANGUAGE", "en-US"]
+default_channel: ["CATALOG_SERVICE_DEFAULT_CHANNEL", "desktop-web"]
+
