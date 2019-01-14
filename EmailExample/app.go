@@ -1,59 +1,12 @@
 package main
 
 import (
-	"bufio"
 	"crypto/tls"
-	"encoding/csv"
 	"fmt"
-	"io"
 	"log"
-	"math/rand"
 	"net/smtp"
-	"os"
 	"strings"
-	"time"
 )
-
-var Days = []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
-
-type Meal struct {
-	Name       string `json:"name"`
-	Difficulty string `json:"difficulty"`
-	PrepTime   string `json:"prep_time"`
-	LastUsed   string `json:"last_used"`
-}
-
-func main() {
-	csvFile, _ := os.Open("meals.csv")
-	reader := csv.NewReader(bufio.NewReader(csvFile))
-	var meals []Meal
-	for {
-		line, error := reader.Read()
-		if error == io.EOF {
-			break
-		} else if error != nil {
-			log.Fatal(error)
-		}
-		meals = append(meals, Meal{
-			Name:       line[0],
-			Difficulty: line[1],
-			PrepTime:   line[2],
-			LastUsed:   line[3],
-		})
-	}
-
-	s1 := rand.NewSource(time.Now().UnixNano())
-	r1 := rand.New(s1)
-	emailBody := ""
-	for x := 0; x < 7; x++ {
-		ndx := r1.Intn(len(meals))
-		emailBody = fmt.Sprintf("%s\n%s\n Supper - %s\n", emailBody, Days[x], meals[ndx].Name)
-		meals = append(meals[:ndx], meals[ndx+1:]...)
-	}
-	send_mail(emailBody)
-}
-
-/**** Mail ****/
 
 type Mail struct {
 	senderId string
@@ -84,12 +37,12 @@ func (mail *Mail) BuildMessage() string {
 	return message
 }
 
-func send_mail(body string) {
+func main() {
 	mail := Mail{}
 	mail.senderId = "pafortin@cp-soft.com"
-	mail.toIds = []string{"pafortin@cp-soft.com", "cafortin640@hotmail.com"}
-	mail.subject = "Meal Plan for week of starting 14 Jan 2019"
-	mail.body = body
+	mail.toIds = []string{"pafortin@cp-soft.com"}
+	mail.subject = "This is the email subject"
+	mail.body = "Harry Potter and Teh magic contest\n\nGood editing!!"
 
 	messageBody := mail.BuildMessage()
 
