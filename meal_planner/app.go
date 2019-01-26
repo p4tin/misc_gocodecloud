@@ -15,12 +15,26 @@ import (
 )
 
 var Days = []string{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"}
+var date_layout = "01-02-2006"
 
 type Meal struct {
-	Name       string `json:"name"`
-	Difficulty string `json:"difficulty"`
-	PrepTime   string `json:"prep_time"`
-	LastUsed   string `json:"last_used"`
+	Name       string
+	Difficulty string
+	PrepTime   string
+	LastUsed   time.Time
+}
+
+func pruneMeals(meals *[]Meal) *[]Meal {
+	var elibibleMeals []Meal
+	lastWeek := time.Now().AddDate(0, 0, -7)
+	fmt.Println("LastWeek:", lastWeek)
+	for _, meal := range *meals {
+		if meal.LastUsed.Before(lastWeek) {
+			fmt.Println("\tmeal Time:", meal.LastUsed)
+			elibibleMeals = append(elibibleMeals, meal)
+		}
+	}
+	return &elibibleMeals
 }
 
 func main() {
@@ -34,23 +48,34 @@ func main() {
 		} else if error != nil {
 			log.Fatal(error)
 		}
+		lastUsed, err := time.Parse(date_layout, line[3])
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(0)
+		}
 		meals = append(meals, Meal{
 			Name:       line[0],
 			Difficulty: line[1],
 			PrepTime:   line[2],
-			LastUsed:   line[3],
+			LastUsed:   lastUsed,
 		})
 	}
 
 	s1 := rand.NewSource(time.Now().UnixNano())
 	r1 := rand.New(s1)
 	emailBody := ""
+	meals = *pruneMeals(&meals)
+	if len(meals) < 7 {
+		fmt.Println("I do not have enought meals to get you a new meal plan.  Please add recipies or update the last used date in the CSV")
+		os.Exit(0)
+	}
 	for x := 0; x < 7; x++ {
 		ndx := r1.Intn(len(meals))
 		emailBody = fmt.Sprintf("%s\n%s\n Supper - %s\n", emailBody, Days[x], meals[ndx].Name)
 		meals = append(meals[:ndx], meals[ndx+1:]...)
 	}
-	send_mail(emailBody)
+	//send_mail(emailBody)
+	fmt.Println(emailBody)
 }
 
 /**** Mail ****/
