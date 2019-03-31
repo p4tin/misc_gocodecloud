@@ -4,11 +4,12 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sns"
 	_ "github.com/mattn/go-oci8"
-	"time"
 )
 
 type Tile struct {
@@ -22,38 +23,39 @@ type Tile struct {
 
 func main() {
 	n := time.Now().UnixNano()
-	db, err := sql.Open("oci8", "MCPDEV/MCPDEV@10.9.8.10:1531/ATGUTL")
+	db, err := sql.Open("oci8", "MCPDEV_3/MCPDEV_3@uophlqadb02.urbanout.com:1531/dev_mcp_phl_svc")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	defer db.Close()
-	fmt.Printf("1. %d\n", (time.Now().UnixNano() - n))
+	//fmt.Printf("1. %d\n", (time.Now().UnixNano() - n))
 
 	if err = db.Ping(); err != nil {
 		fmt.Printf("Error connecting to the database: %s\n", err)
 		return
 	}
-	n = time.Now().UnixNano()
-	rows, err := db.Query("select CREATE_DATE, PUBLISH_STATE, TILE_ID, VISIBLE, CATEGORY_ID, PRODUCT_ID from UC_TILE where PUBLISH_STATE = 3")
-	if err != nil {
-		fmt.Println("Error fetching Tiles")
-		fmt.Println(err)
-		return
-	}
-	defer rows.Close()
-	fmt.Printf("2. %d\n", (time.Now().UnixNano() - n))
-	n = time.Now().UnixNano()
-	results := []Tile{}
-	for rows.Next() {
-		t := Tile{}
-		rows.Scan(&t.Create_date, &t.Publish_state, &t.Tile_id, &t.Visible, &t.Category_id, &t.Product_id)
-		//fmt.Printf("%+v\n", t)
-		publish(t)
-		results = append(results, t)
-	}
-	fmt.Printf("3. %d\n", (time.Now().UnixNano() - n))
-	fmt.Printf("%d tiles selected...\n", len(results))
+	fmt.Println("Connected successful")
+	//n = time.Now().UnixNano()
+	//rows, err := db.Query("select CREATE_DATE, PUBLISH_STATE, TILE_ID, VISIBLE, CATEGORY_ID, PRODUCT_ID from UC_TILE where PUBLISH_STATE = 3")
+	//if err != nil {
+	//	fmt.Println("Error fetching Tiles")
+	//	fmt.Println(err)
+	//	return
+	//}
+	//defer rows.Close()
+	//fmt.Printf("2. %d\n", (time.Now().UnixNano() - n))
+	//n = time.Now().UnixNano()
+	//results := []Tile{}
+	//for rows.Next() {
+	//	t := Tile{}
+	//	rows.Scan(&t.Create_date, &t.Publish_state, &t.Tile_id, &t.Visible, &t.Category_id, &t.Product_id)
+	//	//fmt.Printf("%+v\n", t)
+	//	publish(t)
+	//	results = append(results, t)
+	//}
+	//fmt.Printf("3. %d\n", (time.Now().UnixNano() - n))
+	//fmt.Printf("%d tiles selected...\n", len(results))
 }
 
 func publish(t Tile) {

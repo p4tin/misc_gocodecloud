@@ -100,8 +100,10 @@ func main() {
 		log.Panic(err)
 	}
 
-	client.Quit()
+	err = client.Quit()
+	if err != nil {
+		log.Panic(err)
+	}
 
 	log.Println("Mail sent successfully")
-
 }
