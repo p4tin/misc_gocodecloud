@@ -1,0 +1,30 @@
+app_name: <%= ENV['APP_NAME'] %>, InventoryEventProcessor
+environment: <%= ENV['ENVIRONMENT'] %>, LOCAL
+max_pollers: <%= ENV['MAX_POLLERS'] %>, 1
+max_receivers: <%= ENV['MAX_RECEIVERS'] %>, 1
+polling_period: <%= ENV['POLLING_PERIOD'] %>, 0
+newrelic_license: <%= ENV['NEWRELIC_LICENSE'] %>, 0
+
+mongo:
+  host: <%= ENV['MONGO_HOST'] %>, localhost:27017
+  use_ssl: <%= ENV['MONGO_USE_SSL'] %>, false
+  cert_path: <%= ENV['MONGO_CERT_PATH'] %>, /tmp/certs/
+  rootca: <%= ENV['MONGO_ROOTCA'] %>,
+  client_key: <%= ENV['MONGO_CLIENT_KEY'] %>,
+  client_certificate: <%= ENV['MONGO_CLIENT_CERT'] %>,
+  database: <%= ENV['MONGO_DATABASE'] %>, CatalogService
+  inventory_collection: <%= ENV['INVENTORY_COLLECTION'] %>, inventory_facts
+  pooldefinition_collection: <%= ENV['POOL_DEFINITION_COLLECTION'] %>,
+  sku_detail_collection: <%= ENV['SKU_DETAIL_COLLECTION'] %>,
+  productfilter_collection: <%= ENV['PRODUCT_FILTER_COLLECTION'] %>,
+  order_sku_quantity_collection: <%= ENV['ORDER_SKU_QUANTITY_COLLECTION'] %>,
+
+
+aws:
+  url: <%= ENV['AWS_URL'] %>, http://localhost:4101
+  client_id: <%= ENV['AWS_CLIENT_ID'] %>, 12345678
+  region_id: <%= ENV['AWS_REGION_ID'] %>, us-east-1
+  access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>,
+  secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>,
+  inventory_queue: <%= ENV['INVENTORY_QUEUE'] %>,
+
