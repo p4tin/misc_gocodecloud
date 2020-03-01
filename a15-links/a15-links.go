@@ -19,9 +19,11 @@ func onReady() {
 	google := systray.AddMenuItem("Google", "google search")
 	jsonFormatter := systray.AddMenuItem("JSON Formatter", "beautify json")
 	epoch := systray.AddMenuItem("Epoch Converter", "Epoch Converter")
+	systray.AddSeparator()
+
+	github := systray.AddMenuItem("URBN Github", "URBN Github")
 	ecommInventory := systray.AddMenuItem("ecomm inventory", "ecomm inventory")
 	redteamSprint := systray.AddMenuItem("JIRA Redteam Sprint", "JIRA Redteam Sprint")
-
 	pagerDutyRunbooks := systray.AddMenuItem("Pager Duty Runbooks", "Pager Duty Runbooks")
 	elkphl := systray.AddMenuItem("ELk PHL", "ELk PHL")
 	elkrno := systray.AddMenuItem("ELk RNO", "ELk RNO")
@@ -37,6 +39,9 @@ func onReady() {
 			systray.ShowAppWindow("https://jsonformatter.curiousconcept.com/")
 		case <-epoch.ClickedCh:
 			systray.ShowAppWindow("https://www.epochconverter.com/")
+
+		case <-github.ClickedCh:
+			systray.ShowAppWindow("https://github.com/urbn")
 		case <-ecommInventory.ClickedCh:
 			systray.ShowAppWindow("https://gitlab.urbn.com/urbn/ecomm-inventory")
 		case <-redteamSprint.ClickedCh:
@@ -48,6 +53,7 @@ func onReady() {
 		case <-elkrno.ClickedCh:
 			fmt.Println("elkrno")
 			systray.ShowAppWindow("https://p1inelk101.rno.ecomm.urbanout.com/app/kibana#/home?_g=()")
+
 		case <-mQuit.ClickedCh:
 			systray.Quit()
 			return

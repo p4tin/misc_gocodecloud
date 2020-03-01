@@ -1,0 +1,35 @@
+version: '3'
+services:
+
+  donkey_1:
+    container_name: donkey1
+    image: donkey
+    environment:
+      MEMBER_LIST: ""
+      PORT: 4001
+      NET_PORT: 5001
+    ports:
+      - 4001:4001
+      - 5001:5001
+
+  donkey_2:
+    container_name: donkey2
+    image: donkey
+    environment:
+      MEMBER_LIST: "donkey_1:5001,donkey_3:5003"
+      PORT: 4002
+      NET_PORT: 5002
+    ports:
+      - 4002:4002
+      - 5002:5002
+
+  donkey_3:
+    container_name: donkey3
+    image: donkey
+    environment:
+      MEMBER_LIST: "donkey_1:5001,donkey_2:5002"
+      PORT: 4003
+      NET_PORT: 5003
+    ports:
+      - 4003:4003
+      - 5003:5003
