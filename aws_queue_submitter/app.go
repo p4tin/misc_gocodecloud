@@ -26,7 +26,7 @@ func main() {
 	defer fmt.Println(time.Now())
 	args := os.Args[1:]
 	if len(args) < 2 {
-		panic("Not enought arguments, please provide <filename> <list of queues command delimited>")
+		panic("Not enough arguments, please provide <filename> <list of queues command delimited>")
 	}
 	filename := args[0]
 	queues := strings.Split(args[1], ",")

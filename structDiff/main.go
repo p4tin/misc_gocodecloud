@@ -7,7 +7,8 @@ import (
 )
 
 type otherStruct struct {
-	C int
+	C  int
+	Ar []int
 }
 
 type someStruct struct {
@@ -21,17 +22,17 @@ type masterAStruct struct {
 }
 
 func main() {
-	x := otherStruct{6}
-	y := otherStruct{6}
-	z := otherStruct{7}
-	xx := otherStruct{7}
-	yy := otherStruct{7}
+	x := otherStruct{C: 6}
+	y := otherStruct{C: 6}
+	z := otherStruct{C: 7}
+	xx := otherStruct{C: 7}
+	yy := otherStruct{C: 7}
 	a := someStruct{1, 2, []*otherStruct{&x, &z}}
 	b := someStruct{1, 2, []*otherStruct{&y, &xx}}
 	m1 := masterAStruct{someStruct: []someStruct{a, b}}
 
 	b.Other[1] = &yy
-	m2 := masterAStruct{someStruct: []someStruct{a, b}}
+	m2 := masterAStruct{someStruct: []someStruct{b, a}}
 
 	diff, equal := messagediff.PrettyDiff(m1, m2)
 	fmt.Println(equal)

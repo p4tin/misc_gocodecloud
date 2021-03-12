@@ -1,0 +1,6 @@
+FROM docker.urbn.com/urbn/python:3.8.6-alpine3.11.7-s6
+
+WORKDIR /var/script
+COPY script.py .
+
+CMD ["python3", "script.py"]

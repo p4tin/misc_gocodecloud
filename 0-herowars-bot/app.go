@@ -8,7 +8,10 @@ import (
 	"github.com/go-vgo/robotgo"
 )
 
+var level = 3
+
 func main() {
+	offset := 65 * level
 	for {
 		fx := -1
 		fy := -1
@@ -19,7 +22,7 @@ func main() {
 			fx, fy = robotgo.FindPic("./return_to_city_button.png", screenbit, 0.1)
 
 			fmt.Println("FindBitmap...", fx, fy)
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 		}
 		fx = fx/2 + 30
 		fy = fy/2 + 30
@@ -29,11 +32,12 @@ func main() {
 		fmt.Println(utils.GetLMouseClick())
 		fmt.Println(utils.GetLMouseClick())
 
-		fx, fy = utils.Scoot(fx, fy, 375, -285)
+		//Activity Level -285
+		fx, fy = utils.Scoot(fx, fy, 375, -285+offset)
 		robotgo.Move(fx, fy)
 		fmt.Println(utils.GetLMouseClick())
 
-		fx, fy = utils.Scoot(fx, fy, 0, 230)
+		fx, fy = utils.Scoot(fx, fy, 0, 230-offset)
 		robotgo.Move(fx, fy)
 		fmt.Println(utils.GetLMouseClick())
 
@@ -46,7 +50,7 @@ func main() {
 		time.Sleep(3 * time.Second)
 		fmt.Println(utils.GetLMouseClick())
 
-		time.Sleep(45 * time.Second)
+		//time.Sleep(45 * time.Second)
 	}
 	//robotgo.Click()
 

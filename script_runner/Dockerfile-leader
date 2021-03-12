@@ -1,0 +1,5 @@
+from docker:dind
+
+COPY app /
+
+CMD [ "/bin/sh" ]

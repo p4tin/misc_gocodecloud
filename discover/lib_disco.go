@@ -1,10 +1,11 @@
 //lib_disco.go
-// - go build -buildmode=c-shared -o lib_disco.so lib_disco.go
+// - go build -buildmode=c-shared -o lib_disco.so .
 package main
 
 import (
 	"C"
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -44,15 +45,26 @@ func listAllNodes() []string {
 	nodeNames := make([]string, 0)
 	nodes := mList.Members()
 	for _, node := range nodes {
-		mList.Ping(node.Name, node.Address())
-		nodeNames = append(nodeNames, node.Name)
+		if node != mList.LocalNode() && mList.GetNodeState(node.Name) == 0 {
+			nodeNames = append(nodeNames, node.Name)
+		}
 	}
 	return nodeNames
 }
 
 func main() {
+	// catch exit signals and leave the cluster
+	stop := make(chan os.Signal, 1)
+	//signal.Notify(stop, syscall.SIGINT, syscall.SIGTERM, syscall.SIGHUP)
+
 	startDiscovery()
 	fmt.Println(listAllNodes())
-	for {
+
+	<-stop
+
+	// Leave the cluster with a 5 second timeout. If leaving takes more than 5
+	// seconds we return.
+	if err := mList.Leave(time.Second * 5); err != nil {
+		panic(err)
 	}
 }

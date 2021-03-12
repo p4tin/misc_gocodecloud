@@ -14,16 +14,16 @@ def start_discovery():
     lib.startDiscovery()
 
 
-def getServiceURL(str):
+def get_service_url(str):
     b = go_string(c_char_p(str), len(str))
     lib.getServiceURL.restype = c_char_p
     a = lib.getServiceURL(b, c_char_p(str))
     print a
 
 start_discovery()
-getServiceURL("checkout")
-getServiceURL("pricing")
+get_service_url("checkout")
+get_service_url("pricing")
 
 while True:
     time.sleep(5)
-    # print(lib.list_all_nodes())
+    print(lib.listAllNodes())

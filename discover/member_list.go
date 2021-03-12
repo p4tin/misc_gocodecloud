@@ -1,14 +1,18 @@
 package main
 
+import "C"
 import (
+	"encoding/base64"
 	"encoding/json"
 	"flag"
 	"fmt"
+	"net"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/hashicorp/memberlist"
 	"github.com/pborman/uuid"
@@ -203,12 +207,17 @@ var mList *memberlist.Memberlist
 
 func start() (*memberlist.Node, error) {
 	var err error
-	hostname, _ := os.Hostname()
+	//hostname, _ := os.Hostname()
 	c := memberlist.DefaultWANConfig()
+	c.ProbeInterval = time.Second * 2
+	c.ProbeTimeout = time.Millisecond * 500
+
 	c.Events = &eventDelegate{}
 	c.Delegate = &delegate{}
 	c.BindPort, _ = strconv.Atoi(proto_port)
-	c.Name = serviceName + "-" + hostname + "-" + uuid.NewUUID().String()
+	encoded := base64.StdEncoding.EncodeToString([]byte(getMyIP()))
+
+	c.Name = serviceName + "-" + encoded + "-" + uuid.NewUUID().String()
 	mList, err = memberlist.Create(c)
 	if err != nil {
 		return nil, err
@@ -231,6 +240,18 @@ func start() (*memberlist.Node, error) {
 	MyNode = mList.LocalNode()
 	fmt.Printf("Local member %s:%d\n", MyNode.Addr, MyNode.Port)
 	return MyNode, nil
+}
+
+func getMyIP() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		panic(err)
+	}
+
+	defer conn.Close()
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+
+	return fmt.Sprintf("%s:%s", localAddr.IP.String(), os.Getenv("PORT"))
 }
 
 //func main() {

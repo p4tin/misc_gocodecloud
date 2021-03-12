@@ -18,6 +18,7 @@ func onReady() {
 
 	google := systray.AddMenuItem("Google", "google search")
 	jsonFormatter := systray.AddMenuItem("JSON Formatter", "beautify json")
+	jsonDiff := systray.AddMenuItem("JSON Diff Tool", "compare 2 json docs")
 	epoch := systray.AddMenuItem("Epoch Converter", "Epoch Converter")
 	systray.AddSeparator()
 
@@ -37,6 +38,8 @@ func onReady() {
 			systray.ShowAppWindow("https://www.google.com")
 		case <-jsonFormatter.ClickedCh:
 			systray.ShowAppWindow("https://jsonformatter.curiousconcept.com/")
+		case <-jsonDiff.ClickedCh:
+			systray.ShowAppWindow("http://www.jsondiff.com/")
 		case <-epoch.ClickedCh:
 			systray.ShowAppWindow("https://www.epochconverter.com/")
 

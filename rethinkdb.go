@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 
-	r "github.com/dancannon/gorethink"
+	r "gopkg.in/rethinkdb/rethinkdb-go.v6"
 )
 
 var session *r.Session
 
 // Struct tags are used to map struct fields to fields in the database
-type Person struct {
+type RtPerson struct {
 	Id    string `gorethink:"id,omitempty"`
 	Name  string `gorethink:"name"`
 	Place string `gorethink:"place"`
@@ -18,8 +18,9 @@ type Person struct {
 
 func init() {
 	var err error
+
 	session, err = r.Connect(r.ConnectOpts{
-		Address:  "localhost:28015",
+		Address:  "localhost:32770",
 		Database: "test",
 	})
 	if err != nil {
@@ -142,7 +143,7 @@ func fetchAllRecords() {
 	}
 
 	// Read records into persons slice
-	var persons []Person
+	var persons []RtPerson
 	err2 := rows.All(&persons)
 	if err2 != nil {
 		fmt.Println(err2)
